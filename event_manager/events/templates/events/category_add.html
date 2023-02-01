@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Neue Kategorie eintragen
+{% endblock %}
+
+{% block head %}
+Neue Kategorie eintragen
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'events:categories' %}">Zurück zur Übersicht</a>
+<div class="container">
+    {% crispy form %}
+</div>
+{% endblock %}

@@ -8,8 +8,16 @@ arrow==1.2.3
     # via -r requirements.in
 asgiref==3.6.0
     # via django
-django==4.1.3
+crispy-bootstrap5==0.7
     # via -r requirements.in
+django==4.1.3
+    # via
+    #   -r requirements.in
+    #   crispy-bootstrap5
+django-crispy-forms==1.14.0
+    # via
+    #   -r requirements.in
+    #   crispy-bootstrap5
 python-dateutil==2.8.2
     # via arrow
 six==1.16.0

@@ -33,7 +33,10 @@ class Category(DateMixin):
     # null => darf NULL sein in der DB,
     # blank => das Formularfeld darf leer sein
     sub_title = models.CharField(
-        max_length=100, null=True, blank=True)
+        max_length=100,
+        null=True,
+        blank=True
+    )
     description = models.TextField(null=True, blank=True)  # optionales Feld
  
     def __str__(self) -> str:

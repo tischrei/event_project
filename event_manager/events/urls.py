@@ -9,4 +9,24 @@ urlpatterns = [
 
     # events/categories
     path("categories", views.categories, name="categories"),
+
+    # events/category/3
+    path("category/<int:pk>", views.category, name="category_detail"),
+
+    # events/category/add
+    path("category/add", views.category_add, name="category_add"),
+
+    # events/category/3/update
+    path(
+        "category/<int:pk>/update",
+        views.category_update,
+        name="category_update"
+    ),
+
+    # events/event/add
+    path(
+        "event/add",
+        views.EventCreateView.as_view(),
+        name="event_add"
+    ),
 ]
