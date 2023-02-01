@@ -17,6 +17,18 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = "__all__"
+ 
+        widgets = {
+            "date": forms.DateInput(
+                format=("%Y-%m-%d %H:%M"), attrs={"type": "datetime-local"}
+            ),
+            "min_group": forms.RadioSelect()
+        }
+ 
+        labels = {
+            "name": "Was geht ab?",
+            "min_group": "Mindestgruppe",
+        }
 
 
 class CategoryForm(forms.ModelForm):
