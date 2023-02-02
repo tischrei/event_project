@@ -13,7 +13,7 @@ Events
     {%  for event in object_list %}
     <li>
         <a href="{{event.get_absolute_url}}">
-            {{event}} {{event.id}}
+            {{event}} {{event.category}}, {{event.author.email}}
         </a>
     </li>
     {% endfor %}

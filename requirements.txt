@@ -18,6 +18,8 @@ django-crispy-forms==1.14.0
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
+django-environ==0.9.0
+    # via -r requirements.in
 python-dateutil==2.8.2
     # via arrow
 six==1.16.0

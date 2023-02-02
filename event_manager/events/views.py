@@ -37,7 +37,7 @@ class EventSearchView(ListView):
  
     def get_queryset(self):
         qs = super().get_queryset()
-        q = self.request.GET.get("q")
+        q = self.request.GET.get("q", "")
         
         return qs.filter(Q(name__icontains=q) | Q(sub_title__icontains=q))
     
@@ -48,6 +48,8 @@ class EventListView(ListView):
     Template Name ist: MODELNAME_list.html
     """
     model = Event
+    # prefetch_related: alle related Objekte vorladen. Reduziert Datenbank - Hits
+    queryset = Event.objects.prefetch_related("category", "author").all()
  
  
 class EventDetailView(DetailView):
