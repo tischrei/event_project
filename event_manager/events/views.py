@@ -7,16 +7,27 @@ from .models import Category, Event
 from .forms import CategoryForm, EventForm
 
 
-class EventListView(ListView):
-    """
-    events
+class ActiveEventListView(ListView):
+    """zeige hier nur aktive Events an
+    dazu überschreiben wir das QS.
+    events/active
     """
     model = Event
+    queryset = Event.active_events.all()
 
 
+class EventListView(ListView):
+    """ 
+    http://127.0.0.1:8000/events
+    Template Name ist: MODELNAME_list.html
+    """
+    model = Event
+ 
+ 
 class EventDetailView(DetailView):
     """
-    events/event/3
+    http://127.0.0.1:8000/events/event/3
+    Template Name ist: MODELNAME_detail.html
     """
     model = Event
 

@@ -1,11 +1,12 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from .managers import ActiveManager
 
 # User-Model immer so importieren aus den Settings zur Portierbarkeit
 User = get_user_model()
 
- 
+
 class DateMixin(models.Model):
     """eine abstrakte Klasse, die selbst keine DB-Tabellen erstellt."""
  
@@ -79,6 +80,10 @@ class Event(DateMixin):
         related_name="events"
     )
 
+    # wenn man einen zweiten Manager angibt,  
+    # muss objects = models.Manager() definiert werden.
+    objects = models.Manager()  # Event.objects.all()
+    active_events = ActiveManager()  # Event.active_events.all()
  
     def __str__(self) -> str:
         return self.name
@@ -89,4 +94,13 @@ class Event(DateMixin):
         events/event/3
         """
         return reverse("events:event_detail", kwargs={"pk": self.pk})
+    
+    def related_events(self):
+        """
+        Return 5 ähnlcihe Objekte zu diesem Geschäftsobjekt
+        """
+        related_events = Event.objects.filter(
+            category=self.category
+        )
+        return related_events.exclude(pk=self.pk)[:5]
     

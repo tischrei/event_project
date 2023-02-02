@@ -15,5 +15,12 @@ Detailseite des Events {{object}}
 
     <h3>Beschreibung</h3>
     <p>{{object.description}}</p>
+
+    <h3>Ähnliche Events</h3>
+    <ul>
+    {% for event in object.related_events %}
+        <li>{{event}}</li>
+    {% endfor %}
+    </ul>
     
 {% endblock %}

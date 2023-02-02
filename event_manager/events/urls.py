@@ -43,4 +43,11 @@ urlpatterns = [
         views.EventListView.as_view(),
         name="events"
     ),
+
+    # events/active
+    path(
+        "active",
+        views.ActiveEventListView.as_view(),
+        name="events_active"
+    ),
 ]
