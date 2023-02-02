@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from .models import Category, Event
 from .forms import CategoryForm, EventForm
 
@@ -27,6 +28,19 @@ class ActiveEventListView(ListView):
     model = Event
     queryset = Event.active_events.all()
 
+
+class EventSearchView(ListView):
+    """ 
+    http://127.0.0.1:8000/events/search?q=suchwort
+    """
+    model = Event
+ 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        q = self.request.GET.get("q")
+        
+        return qs.filter(Q(name__icontains=q) | Q(sub_title__icontains=q))
+    
 
 class EventListView(ListView):
     """ 

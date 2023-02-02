@@ -51,6 +51,13 @@ urlpatterns = [
         name="events"
     ),
 
+    # events/search?q=suchwort
+    path(
+        "search",
+        views.EventSearchView.as_view(),
+        name="events_search"
+    ),
+
     # events/active
     path(
         "active",
