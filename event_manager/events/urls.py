@@ -29,4 +29,18 @@ urlpatterns = [
         views.EventCreateView.as_view(),
         name="event_add"
     ),
+
+    # events/event/3
+    path(
+        "event/<int:pk>",
+        views.EventDetailView.as_view(),
+        name="event_detail"
+    ),
+
+    # events
+    path(
+        "",
+        views.EventListView.as_view(),
+        name="events"
+    ),
 ]

@@ -1,8 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpRequest, Http404
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from .models import Category, Event
 from .forms import CategoryForm, EventForm
+
+
+class EventListView(ListView):
+    """
+    events
+    """
+    model = Event
+
+
+class EventDetailView(DetailView):
+    """
+    events/event/3
+    """
+    model = Event
+
 
 class EventCreateView(CreateView):
     """

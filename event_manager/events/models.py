@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 # User-Model immer so importieren aus den Settings zur Portierbarkeit
@@ -81,3 +82,11 @@ class Event(DateMixin):
  
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self):
+        """
+        URL Pfad zum Objekt
+        events/event/3
+        """
+        return reverse("events:event_detail", kwargs={"pk": self.pk})
+    

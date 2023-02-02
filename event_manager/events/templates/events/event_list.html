@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block head %}
+<h1>Übersicht der Events</h1>
+{% endblock %}
+
+{% block content %}
+<ul>
+    {%  for event in object_list %}
+    <li>
+        <a href="{{event.get_absolute_url}}">
+            {{event}} {{event.id}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+<p>
+    <a href="{% url 'events:event_add' %}">neuen Event eintragen</a>
+</p>
+{% endblock %}
