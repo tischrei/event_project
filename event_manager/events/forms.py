@@ -2,6 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from .models import Category, Event
+from django.core.exceptions import ValidationError
 
 # ein zusätzliches Formular ohne ModelForm zu nutzen
 # class MyForm(forms.Form):
@@ -29,6 +30,17 @@ class EventForm(forms.ModelForm):
             "name": "Was geht ab?",
             "min_group": "Mindestgruppe",
         }
+    def clean_sub_title(self) -> str:
+        """Das Feld sub_title bereinigen und im Falle
+        des Falles einen ValidationError auslösen.
+        
+        Schema der clean-Methoden: def clean_FELDNAME(self)
+        Rückgabe muss der Feldwert sein.
+        """
+        sub_title = self.cleaned_data["sub_title"]
+        sub_title = sub_title.replace("x", "")
+        if isinstance(sub_title, str) and "@" in sub_title:
+            raise ValidationError("Das @-Symbol ist im Subtitle nicht legal.")
 
 
 class CategoryForm(forms.ModelForm):

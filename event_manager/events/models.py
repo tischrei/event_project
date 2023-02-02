@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from .managers import ActiveManager
+from .validators import datetime_in_future
 
 # User-Model immer so importieren aus den Settings zur Portierbarkeit
 User = get_user_model()
@@ -57,7 +59,13 @@ class Event(DateMixin):
         LARGE = 20, "sehr große Gruppe"
         UNLIMITED = 0, "ohne Limit"
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100,
+        validators=[
+            MinLengthValidator(3),
+            MaxLengthValidator(100)
+        ],
+    )
     sub_title = models.CharField(
         max_length=100,
         null=True,
@@ -70,7 +78,7 @@ class Event(DateMixin):
         related_name="events"
     )
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(validators=[datetime_in_future])
 
     min_group = models.IntegerField(choices=Group.choices)
 
