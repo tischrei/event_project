@@ -30,17 +30,45 @@ class EventForm(forms.ModelForm):
             "name": "Was geht ab?",
             "min_group": "Mindestgruppe",
         }
+
     def clean_sub_title(self) -> str:
         """Das Feld sub_title bereinigen und im Falle
         des Falles einen ValidationError auslösen.
         
         Schema der clean-Methoden: def clean_FELDNAME(self)
-        Rückgabe muss der Feldwert sein.
+        Rückgabe  muss der Feldwert sein.
         """
         sub_title = self.cleaned_data["sub_title"]
-        sub_title = sub_title.replace("x", "")
-        if isinstance(sub_title, str) and "@" in sub_title:
-            raise ValidationError("Das @-Symbol ist im Subtitle nicht legal.")
+        
+        if isinstance(sub_title, str):
+ 
+            # von Hashmarks bereinigen
+            sub_title = sub_title.replace("#", "")
+ 
+            # Validation Error auslösen, falls ein @ Symbol im Sub_title
+            if "@" in sub_title:
+                raise ValidationError("Das @-Symbol ist im Subtitle nicht legal.")
+ 
+        return sub_title
+    
+    def clean(self) -> dict:
+        super().clean()  # erzeugt self.cleaned_data
+ 
+        name = self.cleaned_data.get("name")
+        sub_title = self.cleaned_data.get("sub_title")
+        if isinstance(sub_title, str) and isinstance(name, str):
+ 
+            if name in sub_title:
+                self._errors["sub_title"] = self.error_class(
+                    ["Bitte mal den Subitle prüfen."]
+                )
+
+                self._errors["name"] = self.error_class(
+                    ["Name ist im Subtitle"]
+                )
+                raise ValidationError("Der Name darf nicht im Subtitle sein")
+        
+        return self.cleaned_data
 
 
 class CategoryForm(forms.ModelForm):
