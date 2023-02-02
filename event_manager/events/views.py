@@ -1,10 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpRequest, Http404
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic.edit import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Category, Event
 from .forms import CategoryForm, EventForm
+
+
+class EventDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    event/3/delete
+    Template name: event_confirm_delete.html
+    """
+    model = Event
+    success_url = reverse_lazy("events:events")
 
 
 class ActiveEventListView(ListView):

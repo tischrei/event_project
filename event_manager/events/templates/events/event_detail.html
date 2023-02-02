@@ -10,6 +10,7 @@ Detailseite des Events {{object}}
 
 {% block content %}
 <a href="{% url 'events:events' %}">Zurück zur Übersicht</a>
+<a href="{% url 'events:event_delete' object.pk %}">Event löschen</a>
     <h2>{{object.sub_title}}</h2>
     <p>Termin: {{object.date}}</p>
 

@@ -37,6 +37,13 @@ urlpatterns = [
         name="event_detail"
     ),
 
+    # events/event/3/delete
+    path(
+        "event/<int:pk>/delete",
+        views.EventDeleteView.as_view(),
+        name="event_delete"
+    ),
+
     # events
     path(
         "",
