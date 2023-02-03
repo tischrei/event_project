@@ -5,10 +5,20 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from .models import Category, Event
 from .forms import CategoryForm, EventForm
+
+
+class IsModerator(LoginRequiredMixin, UserPassesTestMixin):
+    """
+    prüfen, ob der User in Moderatorengruppe ist (moderatoren)
+    """
+    def test_func(self) -> bool | None:
+        return self.request.user.groups.filter(name="moderatoren").exists()
 
 
 class EventDeleteView(LoginRequiredMixin, DeleteView):
@@ -60,13 +70,16 @@ class EventDetailView(DetailView):
     model = Event
 
 
-class EventCreateView(CreateView):
+class EventCreateView(LoginRequiredMixin,
+                      SuccessMessageMixin,
+                      CreateView):
     """
     das Default-Template einer CreateView ist _form.html
     events/event/add
     """
     model = Event
     form_class = EventForm
+    success_message = "Der Event wurde erfolgreich eingetragen"
 
     def form_valid(self, form):
         form.instance.author = self.request.user

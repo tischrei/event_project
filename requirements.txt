@@ -8,6 +8,8 @@ arrow==1.2.3
     # via -r requirements.in
 asgiref==3.6.0
     # via django
+coverage==7.1.0
+    # via -r requirements.in
 crispy-bootstrap5==0.7
     # via -r requirements.in
 django==4.1.3
