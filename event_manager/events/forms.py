@@ -16,6 +16,8 @@ class EventForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', "Abschicken"))
     
     class Meta:
+        # damit bei der Eingabe direkt der angemeldete User genommen wird.
+        exclude = ("author", )
         model = Event
         fields = "__all__"
  

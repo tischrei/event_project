@@ -68,6 +68,10 @@ class EventCreateView(CreateView):
     model = Event
     form_class = EventForm
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 def category_add(request: HttpRequest) -> HttpResponse:
     """
     trage eine neue Kategorie ein (stell Form zur Verfügung und
